@@ -133,4 +133,30 @@ describe('Tic Tac Toe Game', () => {
 
     expect(game._board._state.some(x => x === 1)).to.equal(false);
   });
+
+  it ('should produce game state in JSON string', () => {
+    let game = new TicTacToeGame();
+    let gameState = JSON.parse(game.toJson());
+
+    expect(gameState).to.deep.equal({
+      isOver: false,
+      winner: null,
+      humanFirst: true,
+      board: [0, 0, 0, 0, 0, 0, 0, 0, 0]});
+  });
+
+  it ('creates a game from JSON', () => {
+    let game = new TicTacToeGame();
+    game._board._state = [2, 2, 0,
+                          0, 0, 0,
+                          0, 0, 0 ];
+
+    let newGame = TicTacToeGame.fromJson(game.toJson());
+
+    expect(newGame.isOver).to.equal(game.isOver);
+    expect(newGame.winner).to.equal(game.winner);
+    expect(newGame.humanFirst).to.equal(game.humanFirst);
+    expect(newGame._board.state).to.deep.equal(game._board._state);
+
+  });
 });
